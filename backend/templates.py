@@ -14,6 +14,7 @@ from fastapi import APIRouter, Depends, HTTPException
 
 from . import auth, config
 from .boards import board_ctx, manager
+from .crdt import REFERENCE_FIELDS
 from .models import TemplateCreateReq
 from .storage import now_ms, read_json, write_json_atomic
 
@@ -308,7 +309,7 @@ def _remap_ids(shapes: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         new_shape.pop("fc", None)
         out.append(new_shape)
     for shape in out:
-        for field in ("from", "to"):
+        for field in REFERENCE_FIELDS:
             ref = shape.get(field)
             if isinstance(ref, str) and ref in id_map:
                 shape[field] = id_map[ref]

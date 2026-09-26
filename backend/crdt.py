@@ -50,6 +50,9 @@ OP_TYPES = {
     "reorder", "reparent", "path_extend", "truncate_path", "batch",
 }
 
+#: 图形之间的引用字段: edge 使用 from/to, mindnode 使用 parent
+REFERENCE_FIELDS = ("from", "to", "parent")
+
 #: 允许通过 set_props 走 LWW 寄存器修改的字段
 LWW_FIELDS = {
     "fill", "stroke", "strokeWidth", "fontSize", "fontFamily", "fontWeight",
@@ -163,6 +166,11 @@ def sanitize_shape(raw: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         val = raw.get(key)
         if isinstance(val, str) and val:
             shape[key] = val[:64]
+    parent = raw.get("parent")
+    if isinstance(parent, str):
+        shape["parent"] = parent[:64] or None
+    elif parent is None and "parent" in raw:
+        shape["parent"] = None
     meta = raw.get("meta")
     if isinstance(meta, dict):
         shape["meta"] = {

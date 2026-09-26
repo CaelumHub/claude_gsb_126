@@ -254,7 +254,7 @@ def render_mindmap_links(shapes: List[Dict[str, Any]]) -> str:
     by_id = {s["id"]: s for s in shapes if not s.get("deleted")}
     out: List[str] = []
     for shape in shapes:
-        parent_id = shape.get("from")
+        parent_id = shape.get("parent")
         if not parent_id or shape.get("deleted") or shape.get("kind") != "mindnode":
             continue
         parent = by_id.get(parent_id)
