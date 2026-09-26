@@ -359,7 +359,7 @@ class BoardManager:
             i += 1
         for op in ops:   # 连线/父子关系映射到新 ID
             shape = op["shape"]
-            for field in ("from", "to"):
+            for field in ("from", "to", "parent"):
                 if shape.get(field) in id_map:
                     shape[field] = id_map[shape[field]]
         if ops:

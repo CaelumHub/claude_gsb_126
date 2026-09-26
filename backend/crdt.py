@@ -159,7 +159,7 @@ def sanitize_shape(raw: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     collapsed = raw.get("collapsed")
     if isinstance(collapsed, bool):
         shape["collapsed"] = collapsed
-    for key in ("from", "to"):
+    for key in ("from", "to", "parent"):
         val = raw.get(key)
         if isinstance(val, str) and val:
             shape[key] = val[:64]
